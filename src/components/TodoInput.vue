@@ -17,14 +17,14 @@ function handleSubmit() {
 </script>
 
 <template>
-  <form @submit.prevent="handleSubmit">
+  <form @submit.prevent="handleSubmit" class="flex gap-2 mb-4">
     <input 
       type="text" 
       class="todo-input"
       placeholder="添加一个新的事项"
       v-model="text"
     />
-    <button class="add-button">添加待办事项</button>
+    <button type="submit" class="btn-primary">添加待办事项</button>
   </form>
 
 </template>
