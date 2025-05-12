@@ -1,26 +1,23 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-
-const emit = defineEmits<{
-  (e: 'add-todo', text: string): void
-}>()
+import { useTodoStore } from '../composables/useTodoStore'
 
 const text = ref('')
+const { addTodo } = useTodoStore()
 
 function handleSubmit() {
   if (text.value.trim()) {
-    emit('add-todo', text.value)
+    addTodo(text.value)
     text.value = ''
   }
 }
-
 </script>
 
 <template>
   <form @submit.prevent="handleSubmit" class="flex gap-2 mb-4">
     <input 
       type="text" 
-      class="todo-input"
+      class="input-text"
       placeholder="添加一个新的事项"
       v-model="text"
     />

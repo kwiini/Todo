@@ -1,26 +1,23 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
-import type { Todo } from '../types';
+import { useTodoStore } from '../composables/useTodoStore'
+import type { Todo } from '../core/types'
 
 const props = defineProps<{
   todo: Todo
 }>()
 
-const emit = defineEmits<{
-  (e: 'delete'): void
-  (e: 'toggle'): void
-  (e: 'edit', text: string): void
-}>()
+const { deleteTodo, toggleTodo, editTodo } = useTodoStore()
 
 const editText = ref(props.todo.text)
 const isEditing = ref(props.todo.isEditing || false)
 
 function handleDelete() {
-  emit('delete')
+  deleteTodo(props.todo.id)
 }
 
 function handleToggle() {
-  emit('toggle')
+  toggleTodo(props.todo.id)
 }
 
 function handleEdit() {
@@ -29,7 +26,10 @@ function handleEdit() {
 
 function handleSave() {
   if (editText.value.trim()) {
-    emit('edit', editText.value)
+    editTodo({ 
+      id: props.todo.id, 
+      text: editText.value 
+    })
     isEditing.value = false
   }
 }
@@ -57,7 +57,7 @@ watch(() => props.todo.isEditing, (newVal) => {
         <span 
           @dblclick="handleEdit"
           class="flex-1"
-          :class="{ 'completed-style': todo.completed }" 
+          :class="{ 'line-through': todo.completed }" 
         >
           {{ todo.text }}
         </span>
