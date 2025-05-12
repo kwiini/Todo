@@ -80,7 +80,7 @@ npm run preview
 使用 Composition API 的 `provide/inject` 实现跨组件状态共享：
 
 ```typescript
-// core/todo.ts
+// composables/useTodoStore.ts
 export function useTodoStore() {
   const todos = ref<TodoList>(/* ... */)
   
